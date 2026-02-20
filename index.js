@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const cloudinary = require("cloudinary").v2;
 
@@ -11,6 +12,7 @@ cloudinary.config({
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const userRouter = require("./routes/user");
 const offerRoutes = require("./routes/offer");
