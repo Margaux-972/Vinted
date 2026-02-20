@@ -1,0 +1,28 @@
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const app = express();
+app.use(express.json());
+
+const userRouter = require("./routes/user");
+const offerRoutes = require("./routes/offer");
+
+mongoose.connect(process.env.MONGODB_URI);
+
+app.use(userRouter, offerRoutes);
+
+app.all(/.*/, (req, res) => {
+  res.status(404).json({ message: "This route does not exist" });
+});
+
+app.listen(process.env.PORT, () => {
+  console.log("Server started 💪💪");
+});
