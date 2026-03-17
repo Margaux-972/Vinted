@@ -19,6 +19,10 @@ const offerRoutes = require("./routes/offer");
 
 mongoose.connect(process.env.MONGODB_URI);
 
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Bienvenue sur le backend Vtd de Margaux" });
+});
+
 app.use(userRouter, offerRoutes);
 
 app.all(/.*/, (req, res) => {
